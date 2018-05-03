@@ -7,19 +7,22 @@ public class MoveBall : MonoBehaviour {
     private Vector3 accel;
     private Vector3 dir;
     private Vector3 old, current = new Vector3(0,0,0);
+    private Vector3 initalPos;
     private int initSpeed;
     private AudioSource hitSound;
+    private int count;
 
     public int speed, maxSpeed;
     public int increment;
     public float min;
     public float max;
     public Rigidbody rb;
-
     public GameController gc;
 
     // Use this for initialization
 	void Start () {
+        count = 0;
+        initalPos = rb.position;
         if (!gc.getStartGameStatus())
         {
             initSpeed = speed;
@@ -32,6 +35,7 @@ public class MoveBall : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         //Debug.Log("GameStatus: " + gc.getStartGameStatus());
         if (Input.GetButtonDown("Fire1")&&(!gc.getStartGameStatus())&&(!gc.getEndGame()))
         {
@@ -81,6 +85,7 @@ public class MoveBall : MonoBehaviour {
         {
             Debug.Log("Out of Boundary");
             respawn();
+            respawn();
         }
     }
 
@@ -102,7 +107,7 @@ public class MoveBall : MonoBehaviour {
     {
         if (s >= maxSpeed)
         {
-            s = 255;
+            s = maxSpeed;
         }
         else
         {
@@ -114,8 +119,9 @@ public class MoveBall : MonoBehaviour {
 
     private void respawn()
     {
-        rb.position = new Vector3(0, 0.5f, 0);
-        rb.velocity = new Vector3(0, 0, 0);
+        rb.position = initalPos;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         gc.setStartGameStatus(false);
         speed = initSpeed;
     }
@@ -123,6 +129,8 @@ public class MoveBall : MonoBehaviour {
     private void collisionDetected(Collision c)
     {
         old = current;
+        count += 1;
+        Debug.Log("Collision: " + count);
         //Debug.Log("Old: "+old.x+", "+ old.y+", "+ old.z);
         //Debug.Log("Current: "+current.x+", "+ current.y+", "+ current.z);
         dir = c.contacts[0].point - rb.transform.position;

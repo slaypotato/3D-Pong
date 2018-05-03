@@ -12,40 +12,39 @@ public class MoveOpponent : MonoBehaviour {
     public GameController gc;
     private Vector3 move;
     private Vector3 init;
+	private Vector3 current;
+	private Vector3 destiny;
 
 	// Use this for initialization
 	void Start () {
-        init = rb.position;
+        init = trf.position;
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-		if (PlayerPrefs.GetInt ("Diff") == 2) {
-			moveFaster ();
-		} else {
-			moveNormal ();
-		}
+	void Update () {
+		moveFaster ();
+        if (!gc.getStartGameStatus())
+        {
+            trf.position = init;
+        }
 	}
-
-	void moveNormal(){
-		if (ball.position.z > 1&&gc.getStartGameStatus())
-		{
-			move = new Vector3(ball.position.x, 0.0f, 0.0f);
-			rb.velocity = move * speed;
-			rb.position = new Vector3(Mathf.Clamp(rb.position.x, bd.xMin, bd.xMax), rb.position.y, rb.position.z);
-		}
-		else
-		{
-			if (!gc.getStartGameStatus())
-			{
-				rb.position = init;
-			}
-		}
-	}
-
+	
 	void moveFaster(){
 		if (ball.position.z > 1 && gc.getStartGameStatus ()) {
-			trf.position = new Vector3 (Mathf.Clamp (ball.position.x, bd.xMin, bd.xMax), trf.position.y, trf.position.z);
-		}
+			current = trf.position;
+			destiny = ball.position;
+            //Debug.Log(trf.position.x);
+            if (Mathf.Abs(destiny.x - current.x) <= speed) {
+				trf.position = new Vector3 (Mathf.Clamp (ball.position.x, bd.xMin, bd.xMax), trf.position.y, trf.position.z);
+			} else {
+				if (destiny.x > current.x){
+					trf.position = new Vector3(Mathf.Clamp (trf.position.x+speed,bd.xMin,bd.xMax), trf.position.y, trf.position.z);
+				} else {
+					trf.position = new Vector3(Mathf.Clamp (trf.position.x-speed,bd.xMin,bd.xMax), trf.position.y, trf.position.z);				
+				}
+                
+			}
+            //Debug.Log(trf.position.x);
+        } 
 	}
 }

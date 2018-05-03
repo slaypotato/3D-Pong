@@ -445,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 1161932277}
   rb: {fileID: 385013991}
+  trf: {fileID: 0}
   speed: 2
   bd:
     xMin: -3
@@ -1526,6 +1527,16 @@ Prefab:
       propertyPath: m_SpriteState.m_PressedSprite
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 224105257364995432, guid: 55309060156d0a54d950d00a03b9d946,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224105257364995432, guid: 55309060156d0a54d950d00a03b9d946,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55309060156d0a54d950d00a03b9d946, type: 2}
   m_IsPrefabParent: 0
@@ -2246,7 +2257,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

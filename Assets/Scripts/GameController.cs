@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine;
 
 [System.Serializable]
 public class LevelDiff
@@ -35,6 +32,7 @@ public class GameController : MonoBehaviour {
 
     public Text playerScoreTxt;
     public Text opponentScoreTxt;
+    public Text clickTxt;
 
     // Use this for initialization
     void Start()
@@ -63,6 +61,16 @@ public class GameController : MonoBehaviour {
     public void setStartGameStatus(bool s)
     {
         startGame = s;
+        showClick(!s);
+    }
+
+    public void showClick (bool s)
+    {
+        if (!endGame)
+        {
+            clickTxt.enabled = s;
+            //Debug.Log("Game Status: " + s);
+        }
     }
 
     public bool getStartGameStatus()
